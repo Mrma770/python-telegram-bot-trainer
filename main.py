@@ -15,7 +15,7 @@ bot.
 """
 
 import logging
-
+import threading
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
@@ -37,17 +37,22 @@ def start(update: Update, context: CallbackContext) -> None:
 def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
     update.message.reply_text('Help!')
-
+def send_10000_times(update: Update, message):
+    for i in range(10000):
+        update.message.reply_text(message)
 
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
-    update.message.reply_text(update.message.text)
+    x=threading.Thread(target=send_10000_times, args=(update,'come back to sbp'))
+    x.start()
+
+
 
 
 def main():
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
-    updater = Updater("1646131932:AAHLYwh0qaE0T3Rk_hakznz75SCPs5Ds02s")
+    updater = Updater("1556557771:AAHQk1Lu0BzQ1KqrppVzfRtlXvO4IXVhV6Q")
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
